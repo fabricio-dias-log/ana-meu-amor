@@ -1,0 +1,427 @@
+/* --- FONTES E VARIÁVEIS DE COR (V4.1) --- */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --cor-fundo: #1a1a1a;
+    --cor-card: #2c2c2c;
+    --cor-texto: #e2e2e2;
+    --cor-titulo: #ffffff;
+    --cor-primaria: #e1acac; /* Ouro Rosa Suave */
+    --cor-secundaria: #f472b6; /* Rosa vibrante mantido para pop */
+    --cor-destaque: #fde047; /* Amarelo-solar mantido */
+    --font-titulo: 'Cormorant', serif;
+    --font-corpo: 'Poppins', sans-serif;
+}
+
+/* --- ESTILOS GERAIS --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    overflow-x: hidden;
+}
+
+/* --- SEÇÃO 1: ABERTURA --- */
+#abertura {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    padding: 0 20px;
+}
+#abertura-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+#abertura .conteudo {
+    position: relative;
+    z-index: 2;
+}
+#abertura h1 {
+    font-family: var(--font-titulo);
+    font-weight: 700;
+    font-size: calc(2.8rem + 3vw);
+    line-height: 1.1;
+    color: #fff;
+    text-shadow: 0 0 20px var(--cor-destaque);
+}
+#abertura p {
+    font-size: calc(1rem + 0.3vw);
+    max-width: 700px;
+}
+#abertura .scroll-down {
+    position: absolute;
+    bottom: 40px;
+    z-index: 2;
+    font-size: 1rem;
+    color: var(--cor-primaria);
+    animation: bounce 2.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-15px); }
+    60% { transform: translateY(-7px); }
+}
+
+/* --- ESTRUTURA DA LINHA DO TEMPO --- */
+.timeline-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    position: relative;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 100%;
+    background-color: rgba(225, 172, 172, 0.3); /* Linha principal */
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    margin: 50px 0;
+    width: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+}
+
+/* Ponto na timeline */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: 0; /* Mude para 0 */
+    transform: translateX(50%); /* Centra o ponto na borda */
+    top: 30px; /* Alinhado com o título */
+    background-color: var(--cor-fundo);
+    border: 4px solid var(--cor-primaria);
+    border-radius: 50%;
+    z-index: 1;
+    transition: background-color 0.5s, transform 0.5s;
+}
+
+.timeline-item:nth-child(even)::after {
+    left: 0; /* Mude para 0 */
+    transform: translateX(-50%); /* Centra o ponto na borda */
+}
+
+.timeline-item.visible::after {
+    background-color: var(--cor-primaria);
+    transform: translateX(50%) scale(1.2);
+}
+ .timeline-item:nth-child(even).visible::after {
+    transform: translateX(-50%) scale(1.2);
+}
+
+/* Conteúdo do card */
+.timeline-content {
+    padding: 30px;
+    background-color: var(--cor-card);
+    position: relative;
+    border-radius: 15px;
+    border: 1px solid rgba(225, 172, 172, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.timeline-item.visible .timeline-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    text-align: right;
+}
+.timeline-item:nth-child(even) .timeline-content {
+    text-align: left;
+}
+
+.timeline-content h2 {
+    font-family: var(--font-titulo);
+    color: var(--cor-primaria);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.timeline-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.timeline-images img {
+    width: 30%;
+}
+
+.timeline-content p {
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
+.timeline-content img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* --- GALERIA CARROSSEL --- */
+.swiper-container {
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+}
+.swiper-pagination-bullet-active {
+    background: var(--cor-primaria) !important;
+}
+.swiper-button-next, .swiper-button-prev {
+    color: var(--cor-primaria) !important;
+}
+
+/* --- SPOTIFY EMBED --- */
+.spotify-embed {
+    margin-top: 20px;
+    border-radius: 12px;
+    border: 0;
+    width: 100%;
+    height: 152px;
+}
+
+/* --- MOTIVOS --- */
+ .grid-motivos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+.motivo {
+    background-color: transparent;
+    border: 2px solid var(--cor-primaria);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+.motivo svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--cor-primaria);
+    transition: all 0.4s;
+}
+.motivo:hover {
+    background-color: var(--cor-primaria);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--cor-primaria);
+}
+.motivo:hover svg {
+    fill: var(--cor-fundo);
+}
+
+/* --- MODAL --- */
+.modal {
+    display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(16, 15, 28, 0.8); backdrop-filter: blur(10px);
+    justify-content: center; align-items: center; padding: 20px;
+}
+.modal-content {
+    background-color: var(--cor-card); color: var(--cor-texto); padding: 40px;
+    border-radius: 20px; border: 1px solid var(--cor-primaria); max-width: 500px;
+    text-align: center; position: relative; box-shadow: 0 0 40px rgba(225, 172, 172, 0.3);
+    animation: zoomIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.modal-content p { font-size: 1.3rem; line-height: 1.6; }
+.close-button {
+    position: absolute; top: 15px; right: 20px; font-size: 2.5rem;
+    font-weight: 300; cursor: pointer; color: var(--cor-primaria);
+    transition: color 0.3s, transform 0.3s;
+}
+.close-button:hover { color: var(--cor-secundaria); transform: rotate(90deg); }
+@keyframes zoomIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* --- SEÇÃO FINAL --- */
+#finalizacao {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    background-image: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)), url(assets/images/2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+#finalizacao h2 {
+    font-family: var(--font-titulo);
+    color: #fff;
+    font-size: calc(2.5rem + 2.5vw);
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+#finalizacao p {
+    max-width: 800px;
+    font-size: calc(1rem + 0.3vw);
+    line-height: 1.8;
+    color: #fff;
+    font-weight: 300;
+}
+#finalizacao strong {
+    color: var(--cor-destaque);
+    font-weight: 600;
+}
+
+.contador-tempo {
+    display: flex;
+    justify-content: space-around; /* Ou space-between, center */
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo suave */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #fff; /* Cor do texto principal do contador */
+}
+
+.contador-tempo div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.contador-tempo span {
+    font-size: 2.5em; /* Tamanho dos números */
+    font-weight: bold;
+    color: #ff8a80; /* Cor de destaque para os números, ajuste conforme sua paleta */
+    line-height: 1.2;
+}
+
+.contador-tempo div div { /* Para o texto "Dias", "Horas", etc. */
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: #f0f0f0; /* Cor mais suave para as legendas */
+    margin-top: 5px;
+}
+
+/* Responsividade para o contador */
+@media (max-width: 600px) {
+    .contador-tempo {
+        flex-direction: column; /* Empilha os itens em telas menores */
+        padding: 15px;
+    }
+    .contador-tempo div {
+        margin-bottom: 10px; /* Espaçamento entre os itens empilhados */
+    }
+    .contador-tempo span {
+        font-size: 2em;
+    }
+    .contador-tempo div div {
+        font-size: 0.8em;
+    }
+}
+
+
+/* --- RESPONSIVIDADE --- */
+@media screen and (max-width: 900px) {
+    .timeline-container::before {
+        left: 30px;
+        transform: translateX(-50%); /* Centra a linha na posição de 30px */
+    }
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px; 
+        padding-right: 20px;
+    }
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+    .timeline-item::after {
+        left: 30px;
+        transform: translateX(-50%); /* Centra a esfera em 30px */
+    }
+    .timeline-item.visible::after {
+        transform: translateX(-50%) scale(1.2); /* Mantém o centro ao escalar */
+    }
+
+     .timeline-item:nth-child(odd) .timeline-content,
+     .timeline-item:nth-child(even) .timeline-content {
+        text-align: left;
+    }
+}
+
+/* --- MELHORIAS PARA TELEMÓVEIS PEQUENOS --- */
+@media screen and (max-width: 600px) {
+    .timeline-content h2 {
+        font-size: 2rem;
+    }
+    .timeline-content {
+        padding: 20px;
+    }
+    #finalizacao h2 {
+        font-size: calc(2rem + 3vw);
+    }
+    #finalizacao p {
+        font-size: calc(0.9rem + 0.3vw);
+    }
+    .motivo {
+        width: 60px;
+        height: 60px;
+        gap: 15px;
+    }
+    .motivo svg {
+        width: 25px;
+        height: 25px;
+    }
+}
